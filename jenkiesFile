@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Cloner le dépôt') {
+            steps {
+                echo '=== Étape 1 : Clonage du dépôt Git ==='
+                git branch: 'main', url: 'https://github.com/safa-rebaei/jenkinsg4.git'
+            }
+        }
+
+        stage('Afficher les fichiers') {
+            steps {
+                echo '=== Étape 2 : Afficher la liste des fichiers ==='
+                bat 'dir'  // si tu es sur Windows
+            }
+        }
+
+        stage('Afficher contenu index.html') {
+            steps {
+                echo '=== Étape 3 : Contenu du fichier index.html ==='
+                bat 'type index.html'  // affiche le contenu du fichier
+            }
+        }
+
+        stage('Fin du pipeline') {
+            steps {
+                echo '=== Étape 4 : Fin du pipeline ==='
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Build réussi avec succès !'
+        }
+        failure {
+            echo '❌ Build échoué.'
+        }
+    }
+}
